@@ -1,14 +1,16 @@
 import './App.css';
 import Counter from './components/Counter/Counter';
+import Formulario from './components/Formulario/Formulario';
 import Productos from './views/Productos';
 function App() {
 
   return (
     <div className="App text-danger">
-      <Counter initialNumber={5} initialNombre={"Pepe"}/>
+      {/* <Counter initialNumber={5} initialNombre={"Pepe"}/>
       <Counter initialNumber={10} initialNombre={"Juan"}/>
-      <Counter initialNumber={50} initialNombre={"Ana"}/>
+      <Counter initialNumber={50} initialNombre={"Ana"}/> */}
       {/* <Productos/> */}
+      <Formulario/>
     </div>
   );
 }
