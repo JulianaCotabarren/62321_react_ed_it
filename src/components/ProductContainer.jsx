@@ -32,14 +32,11 @@ const ProductContainer = () => {
 
   useEffect(() => {
     console.log('se cargo el componente');
-  
     return () => {
       console.log('se elimino el componente');
     }
   }, [click])
-  
-  
-  
+    
 
 console.log('se ejecuto este consol.log pero el html no cargo');
 

@@ -1,6 +1,16 @@
 import React, { useState } from 'react'
 
-const Formulario = () => {
+const Formulario = (props) => {
+
+    const { condicional } = props
+
+    let contenido = null;
+
+    if(condicional) {
+        contenido = <div>Aca el condicional es true</div>
+    }else{
+        contenido = <div>Aca el condicional es false</div>
+    }
 
     const [form, setForm] = useState({
         email:'',
@@ -12,7 +22,7 @@ const Formulario = () => {
     const handleChange = (e) => {
         const {value,name} = e.target;
         setForm({
-            ...form,
+            ...form, //hago una copia del formulario en ese momento para que cuando termine de escribir el email y me mueva para escribir la contraseña el email se mantenga escrito en el formulario y no se borre
             [name]:value
         })
     }
@@ -26,6 +36,7 @@ const Formulario = () => {
         })
     }
 
+
   return (
     <div>
         <form onSubmit={handleSubmit} style={{display:'flex', flexDirection: 'column', width:'40%', margin: '40px auto'}}>
@@ -34,6 +45,7 @@ const Formulario = () => {
             <input onChange={handleChange} value={password} name='password' placeholder='Ingrese la password' type="password" />
             <input type="submit" value="Enviar" />
         </form>
+        {contenido}
     </div>
     
   )
