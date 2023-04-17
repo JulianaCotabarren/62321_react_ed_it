@@ -1,53 +1,43 @@
-import React, { useState } from 'react'
+import React, {useState, useEffect} from 'react'
+import Input from '../../shared/Input'
 
 const Formulario = (props) => {
-
-    const { condicional } = props
-
-    let contenido = null;
-
-    if(condicional) {
-        contenido = <div>Aca el condicional es true</div>
-    }else{
-        contenido = <div>Aca el condicional es false</div>
-    }
-
-    const [form, setForm] = useState({
-        email:'',
-        password:''
-    })
-
-    const { email,password } = form;
+    /* Defino un estado inicial dinámico */
+    const { initialState,inputs,formTitle,onSubmit,showLogin } = props
+    const [form,setForm] = useState(initialState) /* Para esto voy a usar el onChange */
 
     const handleChange = (e) => {
-        const {value,name} = e.target;
-        setForm({
-            ...form, //hago una copia del formulario en ese momento para que cuando termine de escribir el email y me mueva para escribir la contraseña el email se mantenga escrito en el formulario y no se borre
-            [name]:value
-        })
+      const {name,value} = e.target;
+      setForm({
+        ...form,
+        [name]:value
+      })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault() //para que no recargue la pagina
-        console.log(form)
-        setForm({
-            email:'',
-            password:''
-        })
-    }
-
+    /* Hago un useEffect para forzar un re-render que cambie el estado, ya que cuando hacía el cambio de un formulario a otro se actualizaba la vista pero los datos anteriores quedaban guardados */
+    useEffect(() => {
+    }, [showLogin])
+    
 
   return (
     <div>
-        <form onSubmit={handleSubmit} style={{display:'flex', flexDirection: 'column', width:'40%', margin: '40px auto'}}>
-            <h1>Formulario</h1>
-            <input onChange={handleChange} value={email} name='email' placeholder='Ingrese el email' type="email" />
-            <input onChange={handleChange} value={password} name='password' placeholder='Ingrese la password' type="password" />
-            <input type="submit" value="Enviar" />
-        </form>
-        {contenido}
+        <form onSubmit={onSubmit ? (e) => onSubmit(e,form) : null}>
+            <h1>{formTitle || 'Titulo'}</h1>
+            {/* Inputs */}
+            {inputs?.map(({name,type,id,placeholder}) => ( /* Destructuro el objeto input */
+                <Input 
+                  name={name}
+                  type={type}
+                  key={id}
+                  placeholder={placeholder}
+                  onChange={handleChange}
+                />
+            ))}
+            {/* <input type="email" />
+            <input type="password" /> */}
+            <button>Enviar</button>
+        </form>   
     </div>
-    
   )
 }
 
