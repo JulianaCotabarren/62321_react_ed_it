@@ -44,6 +44,7 @@ console.log('se ejecuto este consol.log pero el html no cargo');
     <div>
       {superheroes.map(({id, img, titulo, descripcion, comics}) => (
         <Cart 
+          id={id}
           key={id} 
           img={img} 
           title={titulo}
